@@ -1,0 +1,127 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ict.librarysystem.mapper.BorrowMapper">
+    <resultMap id="BaseResultMap" type="com.ict.librarysystem.domian.Borrow">
+        <!--@mbg.generated-->
+        <!--@Table borrow-->
+        <id column="id" jdbcType="INTEGER" property="id"/>
+        <result column="name" jdbcType="VARCHAR" property="name"/>
+        <result column="author" jdbcType="VARCHAR" property="author"/>
+        <result column="booktype" jdbcType="VARCHAR" property="booktype"/>
+        <result column="borrow_user" jdbcType="VARCHAR" property="borrowUser"/>
+        <result column="creattime" jdbcType="TIMESTAMP" property="creattime"/>
+    </resultMap>
+    <sql id="Base_Column_List">
+        <!--@mbg.generated-->
+        id, `name`, author, booktype, borrow_user, `creattime`
+    </sql>
+    <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+        <!--@mbg.generated-->
+        select
+        <include refid="Base_Column_List"/>
+        from borrow
+        where id = #{id,jdbcType=INTEGER}
+    </select>
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+        <!--@mbg.generated-->
+        delete
+        from borrow
+        where id = #{id,jdbcType=INTEGER}
+    </delete>
+    <insert id="insert" parameterType="com.ict.librarysystem.domian.Borrow">
+        <!--@mbg.generated-->
+        insert into borrow (id, `name`, author,
+                            booktype, borrow_user, creattime)
+        values (#{id,jdbcType=INTEGER}, #{name,jdbcType=VARCHAR}, #{author,jdbcType=VARCHAR},
+                #{booktype,jdbcType=VARCHAR}, #{borrowUser,jdbcType=VARCHAR}, #{creattime,jdbcType=TIMESTAMP})
+    </insert>
+    <insert id="insertSelective" parameterType="com.ict.librarysystem.domian.Borrow">
+        <!--@mbg.generated-->
+        insert into borrow
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                id,
+            </if>
+            <if test="name != null">
+                `name`,
+            </if>
+            <if test="author != null">
+                author,
+            </if>
+            <if test="booktype != null">
+                booktype,
+            </if>
+            <if test="borrowUser != null">
+                borrow_user,
+            </if>
+            <if test="creattime != null">
+                creattime,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                #{id,jdbcType=INTEGER},
+            </if>
+            <if test="name != null">
+                #{name,jdbcType=VARCHAR},
+            </if>
+            <if test="author != null">
+                #{author,jdbcType=VARCHAR},
+            </if>
+            <if test="booktype != null">
+                #{booktype,jdbcType=VARCHAR},
+            </if>
+            <if test="borrowUser != null">
+                #{borrowUser,jdbcType=VARCHAR},
+            </if>
+            <if test="creattime != null">
+                #{creattime,jdbcType=TIMESTAMP},
+            </if>
+        </trim>
+    </insert>
+    <update id="updateByPrimaryKeySelective" parameterType="com.ict.librarysystem.domian.Borrow">
+        <!--@mbg.generated-->
+        update borrow
+        <set>
+            <if test="name != null">
+                `name` = #{name,jdbcType=VARCHAR},
+            </if>
+            <if test="author != null">
+                author = #{author,jdbcType=VARCHAR},
+            </if>
+            <if test="booktype != null">
+                booktype = #{booktype,jdbcType=VARCHAR},
+            </if>
+            <if test="borrowUser != null">
+                borrow_user = #{borrowUser,jdbcType=VARCHAR},
+            </if>
+            <if test="creattime != null">
+                creattime = #{creattime,jdbcType=TIMESTAMP},
+            </if>
+        </set>
+        where id = #{id,jdbcType=INTEGER}
+    </update>
+    <update id="updateByPrimaryKey" parameterType="com.ict.librarysystem.domian.Borrow">
+        <!--@mbg.generated-->
+        update borrow
+        set `name`      = #{name,jdbcType=VARCHAR},
+            author      = #{author,jdbcType=VARCHAR},
+            booktype    = #{booktype,jdbcType=VARCHAR},
+            borrow_user = #{borrowUser,jdbcType=VARCHAR},
+            creattime   = #{creattime,jdbcType=TIMESTAMP}
+        where id = #{id,jdbcType=INTEGER}
+    </update>
+
+    <select id="getAllBorrow" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from borrow
+    </select>
+
+    <select id="getBorrowByUserId" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from borrow
+        where (select t1.username from user t1 where id = #{userid,jdbcType=INTEGER}) = borrow.borrow_user
+    </select>
+</mapper>

@@ -1,0 +1,57 @@
+server:
+  port: 8082
+  tomcat:
+    remote-ip-header: x-forward-for
+    max-threads: 1000
+    max-http-header-size: 8096
+spring:
+  datasource:
+    druid:
+      url: jdbc:mysql://42.193.219.165:3306/library
+      username: root
+      password: admin
+      driver-class-name: com.mysql.cj.jdbc.Driver
+      max-active: 20
+      max-wait: 5000
+      initial-size: 1
+      filters: stat,log4j,wall
+      enable: true
+      #监控配置
+      stat-view-servlet:
+        enabled: true
+        login-username: root
+        login-password: admin
+        allow:
+        deny:
+        url-pattern: /druid/*
+
+      #web应用监控
+      web-stat-filter:
+        enabled: true
+        url-pattern: /*
+        exclusions: '*.js,*.gif,*.jpg,*.png,*.css,*.ico,/druid/*'
+
+      #spring监控
+      aop-patterns: com.ict.librarysystem.*
+  mvc:
+    async:
+      request-timeout: 10000
+
+  jackson:
+    date-format: yyyy-MM-dd HH:mm:ss
+
+  redis:
+    host: 42.193.219.165
+    port: 6379
+    password: admin
+
+#mybatis配置
+mybatis:
+  mapper-locations: classpath:mapperxml/*Mapper.xml
+  configuration:
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+
+#日志输出配置
+logging:
+  level:
+    com.ict.librarysystem.mapper: debug

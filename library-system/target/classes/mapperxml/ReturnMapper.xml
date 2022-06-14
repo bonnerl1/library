@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ict.librarysystem.mapper.ReturnMapper">
+    <resultMap id="BaseResultMap" type="com.ict.librarysystem.domian.Return">
+        <!--@mbg.generated-->
+        <!--@Table `return`-->
+        <id column="id" jdbcType="INTEGER" property="id"/>
+        <result column="name" jdbcType="VARCHAR" property="name"/>
+        <result column="author" jdbcType="VARCHAR" property="author"/>
+        <result column="booktype" jdbcType="VARCHAR" property="booktype"/>
+        <result column="return_user" jdbcType="VARCHAR" property="returnUser"/>
+        <result column="returntime" jdbcType="TIMESTAMP" property="returntime"/>
+    </resultMap>
+    <sql id="Base_Column_List">
+        <!--@mbg.generated-->
+        id, `name`, author, booktype, return_user, returntime
+    </sql>
+    <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+        <!--@mbg.generated-->
+        select
+        <include refid="Base_Column_List"/>
+        from `return`
+        where id = #{id,jdbcType=INTEGER}
+    </select>
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+        <!--@mbg.generated-->
+        delete
+        from `return`
+        where id = #{id,jdbcType=INTEGER}
+    </delete>
+    <insert id="insert" keyColumn="id" keyProperty="id" parameterType="com.ict.librarysystem.domian.Return"
+            useGeneratedKeys="true">
+        <!--@mbg.generated-->
+        insert into `return` (`name`, author, booktype,
+                              return_user, returntime)
+        values (#{name,jdbcType=VARCHAR}, #{author,jdbcType=VARCHAR}, #{booktype,jdbcType=VARCHAR},
+                #{returnUser,jdbcType=VARCHAR}, #{returntime,jdbcType=TIMESTAMP})
+    </insert>
+    <insert id="insertSelective" keyColumn="id" keyProperty="id" parameterType="com.ict.librarysystem.domian.Return"
+            useGeneratedKeys="true">
+        <!--@mbg.generated-->
+        insert into `return`
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="name != null">
+                `name`,
+            </if>
+            <if test="author != null">
+                author,
+            </if>
+            <if test="booktype != null">
+                booktype,
+            </if>
+            <if test="returnUser != null">
+                return_user,
+            </if>
+            <if test="returntime != null">
+                returntime,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="name != null">
+                #{name,jdbcType=VARCHAR},
+            </if>
+            <if test="author != null">
+                #{author,jdbcType=VARCHAR},
+            </if>
+            <if test="booktype != null">
+                #{booktype,jdbcType=VARCHAR},
+            </if>
+            <if test="returnUser != null">
+                #{returnUser,jdbcType=VARCHAR},
+            </if>
+            <if test="returntime != null">
+                #{returntime,jdbcType=TIMESTAMP},
+            </if>
+        </trim>
+    </insert>
+    <update id="updateByPrimaryKeySelective" parameterType="com.ict.librarysystem.domian.Return">
+        <!--@mbg.generated-->
+        update `return`
+        <set>
+            <if test="name != null">
+                `name` = #{name,jdbcType=VARCHAR},
+            </if>
+            <if test="author != null">
+                author = #{author,jdbcType=VARCHAR},
+            </if>
+            <if test="booktype != null">
+                booktype = #{booktype,jdbcType=VARCHAR},
+            </if>
+            <if test="returnUser != null">
+                return_user = #{returnUser,jdbcType=VARCHAR},
+            </if>
+            <if test="returntime != null">
+                returntime = #{returntime,jdbcType=TIMESTAMP},
+            </if>
+        </set>
+        where id = #{id,jdbcType=INTEGER}
+    </update>
+    <update id="updateByPrimaryKey" parameterType="com.ict.librarysystem.domian.Return">
+        <!--@mbg.generated-->
+        update `return`
+        set `name`      = #{name,jdbcType=VARCHAR},
+            author      = #{author,jdbcType=VARCHAR},
+            booktype    = #{booktype,jdbcType=VARCHAR},
+            return_user = #{returnUser,jdbcType=VARCHAR},
+            returntime  = #{returntime,jdbcType=TIMESTAMP}
+        where id = #{id,jdbcType=INTEGER}
+    </update>
+
+    <select id="getAllReturn" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from `return`;
+    </select>
+
+    <select id="getReturnById" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from `return`
+        where (select t1.username from user t1 where id = #{userid,jdbcType=INTEGER}) = `return`.return_user
+    </select>
+</mapper>
